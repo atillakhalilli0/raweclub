@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom T-Shirt Designer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="border-b border-gray-200 sticky top-0 bg-white z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-extrabold">RAWECLUB</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-sm font-medium hover:text-gray-600">Men</a>
+                        <a href="#" class="text-sm font-medium hover:text-gray-600">Women</a>
+                        <a href="#" class="text-sm font-medium hover:text-gray-600">Kids</a>
+                        <a href="#" class="text-sm font-medium hover:text-gray-600">Collections</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <button class="text-sm font-medium hover:text-gray-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </button>
+                    <button class="text-sm font-medium hover:text-gray-600">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gray-50 py-8 lg:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl lg:text-6xl font-bold tracking-tight mb-4">DESIGN. CREATE. WEAR.</h1>
+                <p class="text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">Create your own style. Upload your photo, customize it, and bring your unique design to life.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+            <!-- Canvas Area -->
+            <div class="lg:col-span-2 order-2 lg:order-1">
+                <div class="bg-gray-50 rounded-lg p-6 lg:p-8">
+                    <div class="flex justify-center items-center">
+                        <canvas id="canvas" class="max-w-full h-auto shadow-lg"></canvas>
+                    </div>
+                </div>
+                
+                <!-- Mobile Action Buttons -->
+                <div class="mt-6 flex flex-col sm:flex-row gap-4 lg:hidden">
+                    <button onclick="downloadDesign()" class="flex-1 bg-black text-white py-4 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                        Download Design
+                    </button>
+                    <button onclick="clearCanvas()" class="flex-1 border border-black py-4 rounded-full font-medium hover:bg-gray-50 transition-colors">
+                        Clear All
+                    </button>
+                </div>
+            </div>
+
+            <!-- Controls Sidebar -->
+            <div class="lg:col-span-1 order-1 lg:order-2">
+                <div class="lg:sticky lg:top-24 space-y-6">
+                    <!-- Upload Section -->
+                    <div>
+                        <h2 class="text-2xl font-bold mb-6">Create Your Design</h2>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">UPLOAD PHOTO</label>
+                                <div class="relative">
+                                    <input type="file" id="imageUpload" accept="image/*" class="hidden">
+                                    <label for="imageUpload" class="block w-full bg-black text-white text-center py-4 rounded-full font-medium cursor-pointer hover:bg-gray-800 transition-colors">
+                                        Choose File
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Side Selection -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2">T-SHIRT VIEW</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button onclick="switchSide('front')" id="frontBtn" class="py-3 border-2 border-black bg-black text-white rounded-full font-medium transition-all">
+                                        Front
+                                    </button>
+                                    <button onclick="switchSide('back')" id="backBtn" class="py-3 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all">
+                                        Back
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Color Selection -->
+                            <div>
+                                <label class="block text-sm font-medium mb-2">T-SHIRT COLOR</label>
+                                <div class="grid grid-cols-5 gap-2">
+                                    <button onclick="changeColor('#FFFFFF')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-white hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#000000')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-black hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#1E40AF')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-blue-800 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#DC2626')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-red-600 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#059669')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-emerald-600 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#7C3AED')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-violet-600 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#EA580C')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-orange-600 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#EC4899')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-pink-500 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#FCD34D')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-yellow-300 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#6B7280')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-gray-500 hover:scale-110 transition-transform"></button>
+                                </div>
+                            </div>
+
+                            <!-- Edit Controls -->
+                            <div class="pt-4 border-t border-gray-200">
+                                <label class="block text-sm font-medium mb-3">EDIT</label>
+                                <div class="space-y-2">
+                                    <button onclick="centerImage()" class="w-full py-3 border border-gray-300 rounded-full font-medium hover:bg-gray-50 transition-colors text-sm">
+                                        Center Image
+                                    </button>
+                                    <button onclick="deleteSelected()" class="w-full py-3 border border-gray-300 rounded-full font-medium hover:bg-gray-50 transition-colors text-sm">
+                                        Delete Selected
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Desktop Action Buttons -->
+                            <div class="hidden lg:block pt-4 space-y-3">
+                                <button onclick="downloadDesign()" class="w-full bg-black text-white py-4 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                                    Download Design
+                                </button>
+                                <button onclick="clearCanvas()" class="w-full border border-black py-4 rounded-full font-medium hover:bg-gray-50 transition-colors">
+                                    Clear All
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tips -->
+                    <div class="bg-gray-50 p-6 rounded-lg">
+                        <h3 class="font-medium mb-3">Tips</h3>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li>• Drag to move your photo</li>
+                            <li>• Resize from corners</li>
+                            <li>• Rotate using top icon</li>
+                            <li>• Press Delete to remove</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="bg-gray-50 py-16 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="text-3xl mb-4">🎨</div>
+                    <h3 class="font-bold mb-2">Unique Design</h3>
+                    <p class="text-sm text-gray-600">Create one-of-a-kind designs with your photos</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl mb-4">⚡</div>
+                    <h3 class="font-bold mb-2">Fast & Easy</h3>
+                    <p class="text-sm text-gray-600">Complete your design in minutes</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl mb-4">💯</div>
+                    <h3 class="font-bold mb-2">Premium Quality</h3>
+                    <p class="text-sm text-gray-600">High-quality materials and printing guaranteed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-200 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-bold mb-4">Products</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-black">T-Shirts</a></li>
+                        <li><a href="#" class="hover:text-black">Sweatshirts</a></li>
+                        <li><a href="#" class="hover:text-black">Hoodies</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-black">Contact</a></li>
+                        <li><a href="#" class="hover:text-black">FAQ</a></li>
+                        <li><a href="#" class="hover:text-black">Shipping</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-black">About Us</a></li>
+                        <li><a href="#" class="hover:text-black">Careers</a></li>
+                        <li><a href="#" class="hover:text-black">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Follow Us</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-black">Instagram</a></li>
+                        <li><a href="#" class="hover:text-black">Twitter</a></li>
+                        <li><a href="#" class="hover:text-black">Facebook</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-600">
+                <p>&copy; 2025 RAWECLUB. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const canvas = new fabric.Canvas('canvas', {
+            width: 500,
+            height: 600,
+            backgroundColor: '#f9fafb'
+        });
+        
+        let tshirtTemplate = null;
+        let currentSide = 'front';
+        let currentColor = '#FFFFFF';
+        let frontObjects = [];
+        let backObjects = [];
+        let isLoadingTemplate = false;
+
+        // Responsive canvas size
+        function resizeCanvas() {
+            const container = document.querySelector('.bg-gray-50.rounded-lg');
+            const containerWidth = container.offsetWidth - 48;
+            const scale = Math.min(containerWidth / 500, 1);
+            
+            if (window.innerWidth < 768) {
+                canvas.setDimensions({
+                    width: containerWidth,
+                    height: containerWidth * 1.2
+                });
+                canvas.setZoom(scale);
+            } else {
+                canvas.setDimensions({
+                    width: 500,
+                    height: 600
+                });
+                canvas.setZoom(1);
+            }
+            canvas.renderAll();
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Load T-shirt template
+        function createTshirtTemplate(side = 'front', callback) {
+            if (isLoadingTemplate) return;
+            isLoadingTemplate = true;
+
+            const imagePath = side === 'front' ? './img/white-shirt.png' : './img/back-side.png';
+            
+            fabric.Image.fromURL(imagePath, function(img) {
+                if (!img || !img.width) {
+                    console.error('Failed to load image:', imagePath);
+                    isLoadingTemplate = false;
+                    return;
+                }
+
+                const scale = Math.min(
+                    canvas.width / img.width,
+                    canvas.height / img.height
+                ) * 0.85;
+                
+                img.scale(scale);
+                img.set({
+                    left: canvas.width / 2,
+                    top: canvas.height / 2,
+                    originX: 'center',
+                    originY: 'center',
+                    selectable: false,
+                    evented: false
+                });
+                
+                if (tshirtTemplate) {
+                    canvas.remove(tshirtTemplate);
+                }
+                
+                tshirtTemplate = img;
+                
+                // Apply current color
+                applyColorToTemplate(currentColor);
+                
+                canvas.add(tshirtTemplate);
+                canvas.sendToBack(tshirtTemplate);
+                canvas.renderAll();
+                
+                isLoadingTemplate = false;
+                
+                if (callback) callback();
+            }, { crossOrigin: 'anonymous' });
+        }
+
+        // Apply color filter to template
+        function applyColorToTemplate(color) {
+            if (!tshirtTemplate) return;
+            
+            tshirtTemplate.filters = [];
+            
+            if (color !== '#FFFFFF') {
+                tshirtTemplate.filters.push(new fabric.Image.filters.BlendColor({
+                    color: color,
+                    mode: 'tint',
+                    alpha: 0.83
+                }));
+            }
+            
+            tshirtTemplate.applyFilters();
+        }
+
+        // Side switch function
+        function switchSide(side) {
+            if (isLoadingTemplate || currentSide === side) return;
+
+            // Save current objects (serialize them properly)
+            const currentObjects = canvas.getObjects().filter(obj => obj !== tshirtTemplate);
+            const serializedObjects = currentObjects.map(obj => obj.toObject(['selectable', 'evented', 'cornerColor', 'cornerSize', 'transparentCorners', 'borderColor', 'cornerStyle']));
+            
+            if (currentSide === 'front') {
+                frontObjects = serializedObjects;
+            } else {
+                backObjects = serializedObjects;
+            }
+
+            // Clear all objects except template
+            canvas.getObjects().forEach(obj => {
+                if (obj !== tshirtTemplate) {
+                    canvas.remove(obj);
+                }
+            });
+
+            // Update current side
+            currentSide = side;
+
+            // Load new template
+            createTshirtTemplate(side, function() {
+                // Restore objects for this side
+                const objectsToLoad = side === 'front' ? frontObjects : backObjects;
+                
+                let loadedCount = 0;
+                const totalObjects = objectsToLoad.length;
+                
+                if (totalObjects === 0) {
+                    canvas.renderAll();
+                    return;
+                }
+                
+                objectsToLoad.forEach(objData => {
+                    fabric.Image.fromObject(objData, function(img) {
+                        img.set({
+                            cornerColor: '#000',
+                            cornerSize: 10,
+                            transparentCorners: false,
+                            borderColor: '#000',
+                            cornerStyle: 'circle'
+                        });
+                        canvas.add(img);
+                        
+                        loadedCount++;
+                        if (loadedCount === totalObjects) {
+                            canvas.renderAll();
+                        }
+                    });
+                });
+            });
+
+            // Update button styles
+            const frontBtn = document.getElementById('frontBtn');
+            const backBtn = document.getElementById('backBtn');
+            
+            if (side === 'front') {
+                frontBtn.className = 'py-3 border-2 border-black bg-black text-white rounded-full font-medium transition-all';
+                backBtn.className = 'py-3 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all';
+            } else {
+                backBtn.className = 'py-3 border-2 border-black bg-black text-white rounded-full font-medium transition-all';
+                frontBtn.className = 'py-3 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all';
+            }
+        }
+
+        createTshirtTemplate();
+
+        // Photo upload
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    fabric.Image.fromURL(event.target.result, function(img) {
+                        const maxWidth = canvas.width * 0.4;
+                        img.scaleToWidth(maxWidth);
+                        img.set({
+                            left: canvas.width / 2,
+                            top: canvas.height / 2,
+                            originX: 'center',
+                            originY: 'center',
+                            cornerColor: '#000',
+                            cornerSize: 10,
+                            transparentCorners: false,
+                            borderColor: '#000',
+                            cornerStyle: 'circle'
+                        });
+                        canvas.add(img);
+                        canvas.setActiveObject(img);
+                        canvas.renderAll();
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+            // Reset input
+            e.target.value = '';
+        });
+
+        // Change color
+        function changeColor(color) {
+            currentColor = color;
+            applyColorToTemplate(color);
+            canvas.renderAll();
+        }
+
+        // Center image
+        function centerImage() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject && activeObject.type === 'image' && activeObject !== tshirtTemplate) {
+                activeObject.set({
+                    left: canvas.width / 2,
+                    top: canvas.height / 2,
+                    originX: 'center',
+                    originY: 'center'
+                });
+                canvas.renderAll();
+            } else {
+                alert('Please select a photo first!');
+            }
+        }
+
+        // Delete selected object
+        function deleteSelected() {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject && activeObject !== tshirtTemplate) {
+                canvas.remove(activeObject);
+                canvas.renderAll();
+            }
+        }
+
+        // Clear canvas
+        function clearCanvas() {
+            const objects = canvas.getObjects();
+            objects.forEach(obj => {
+                if (obj !== tshirtTemplate) {
+                    canvas.remove(obj);
+                }
+            });
+            
+            // Clear saved objects for current side
+            if (currentSide === 'front') {
+                frontObjects = [];
+            } else {
+                backObjects = [];
+            }
+            
+            canvas.renderAll();
+        }
+
+        // Download design
+        function downloadDesign() {
+            canvas.discardActiveObject();
+            canvas.renderAll();
+            
+            const dataURL = canvas.toDataURL({
+                format: 'png',
+                quality: 1,
+                multiplier: 2
+            });
+            
+            const link = document.createElement('a');
+            link.download = `raweclub-tshirt-${currentSide}.png`;
+            link.href = dataURL;
+            link.click();
+        }
+
+        // Delete with keyboard
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Delete' || e.key === 'Backspace') {
+                const activeElement = document.activeElement;
+                if (activeElement.tagName !== 'INPUT' && activeElement.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    deleteSelected();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
