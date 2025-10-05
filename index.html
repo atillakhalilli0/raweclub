@@ -38,50 +38,50 @@
     </nav>
 
     <!-- Hero Section -->
-    <div class="bg-gray-50 py-8 lg:py-12">
+    <div class="bg-gray-50 py-6 lg:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center">
-                <h1 class="text-4xl lg:text-6xl font-bold tracking-tight mb-4">DESIGN. CREATE. WEAR.</h1>
-                <p class="text-lg lg:text-xl text-gray-600 max-w-2xl mx-auto">Create your own style. Upload your photo, customize it, and bring your unique design to life.</p>
+                <h1 class="text-3xl lg:text-6xl font-bold tracking-tight mb-2 lg:mb-4">DESIGN. CREATE. WEAR.</h1>
+                <p class="text-sm lg:text-xl text-gray-600 max-w-2xl mx-auto">Create your own style. Upload your photo, customize it, and bring your unique design to life.</p>
             </div>
         </div>
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12">
             <!-- Canvas Area -->
-            <div class="lg:col-span-2 order-2 lg:order-1">
-                <div class="bg-gray-50 rounded-lg p-6 lg:p-8">
-                    <div class="flex justify-center items-center">
-                        <canvas id="canvas" class="max-w-full h-auto shadow-lg"></canvas>
+            <div class="lg:col-span-2">
+                <div class="bg-gray-50 rounded-lg p-4 lg:p-8 flex items-center justify-center">
+                    <div id="canvasContainer" class="w-full flex justify-center">
+                        <canvas id="canvas"></canvas>
                     </div>
                 </div>
                 
                 <!-- Mobile Action Buttons -->
-                <div class="mt-6 flex flex-col sm:flex-row gap-4 lg:hidden">
-                    <button onclick="downloadDesign()" class="flex-1 bg-black text-white py-4 rounded-full font-medium hover:bg-gray-800 transition-colors">
-                        Download Design
+                <div class="mt-4 grid grid-cols-2 gap-3 lg:hidden">
+                    <button onclick="downloadDesign()" class="bg-black text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors text-sm">
+                        Download
                     </button>
-                    <button onclick="clearCanvas()" class="flex-1 border border-black py-4 rounded-full font-medium hover:bg-gray-50 transition-colors">
+                    <button onclick="clearCanvas()" class="border-2 border-black py-3 rounded-full font-medium hover:bg-gray-50 transition-colors text-sm">
                         Clear All
                     </button>
                 </div>
             </div>
 
             <!-- Controls Sidebar -->
-            <div class="lg:col-span-1 order-1 lg:order-2">
-                <div class="lg:sticky lg:top-24 space-y-6">
+            <div class="lg:col-span-1">
+                <div class="lg:sticky lg:top-24 space-y-4">
                     <!-- Upload Section -->
                     <div>
-                        <h2 class="text-2xl font-bold mb-6">Create Your Design</h2>
+                        <h2 class="text-xl lg:text-2xl font-bold mb-4">Create Your Design</h2>
                         
-                        <div class="space-y-4">
+                        <div class="space-y-3">
                             <div>
-                                <label class="block text-sm font-medium mb-2">UPLOAD PHOTO</label>
+                                <label class="block text-xs font-semibold mb-2 tracking-wide">UPLOAD PHOTO</label>
                                 <div class="relative">
                                     <input type="file" id="imageUpload" accept="image/*" class="hidden">
-                                    <label for="imageUpload" class="block w-full bg-black text-white text-center py-4 rounded-full font-medium cursor-pointer hover:bg-gray-800 transition-colors">
+                                    <label for="imageUpload" class="block w-full bg-black text-white text-center py-3 rounded-full font-medium cursor-pointer hover:bg-gray-800 transition-colors text-sm">
                                         Choose File
                                     </label>
                                 </div>
@@ -89,12 +89,12 @@
 
                             <!-- Side Selection -->
                             <div>
-                                <label class="block text-sm font-medium mb-2">T-SHIRT VIEW</label>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <button onclick="switchSide('front')" id="frontBtn" class="py-3 border-2 border-black bg-black text-white rounded-full font-medium transition-all">
+                                <label class="block text-xs font-semibold mb-2 tracking-wide">T-SHIRT VIEW</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="switchSide('front')" id="frontBtn" class="py-2.5 border-2 border-black bg-black text-white rounded-full font-medium transition-all text-sm">
                                         Front
                                     </button>
-                                    <button onclick="switchSide('back')" id="backBtn" class="py-3 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all">
+                                    <button onclick="switchSide('back')" id="backBtn" class="py-2.5 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all text-sm">
                                         Back
                                     </button>
                                 </div>
@@ -102,40 +102,40 @@
 
                             <!-- Color Selection -->
                             <div>
-                                <label class="block text-sm font-medium mb-2">T-SHIRT COLOR</label>
+                                <label class="block text-xs font-semibold mb-2 tracking-wide">T-SHIRT COLOR</label>
                                 <div class="grid grid-cols-5 gap-2">
-                                    <button onclick="changeColor('#FFFFFF')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-white hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#000000')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-black hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#1E40AF')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-blue-800 hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#DC2626')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-red-600 hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#059669')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-emerald-600 hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#7C3AED')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-violet-600 hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#EA580C')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-orange-600 hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#EC4899')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-pink-500 hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#FCD34D')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-yellow-300 hover:scale-110 transition-transform"></button>
-                                    <button onclick="changeColor('#6B7280')" class="w-12 h-12 rounded-full border-2 border-gray-300 bg-gray-500 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#FFFFFF')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-white hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#000000')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-black hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#1E40AF')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-blue-800 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#DC2626')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-red-600 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#059669')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-emerald-600 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#7C3AED')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-violet-600 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#EA580C')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-orange-600 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#EC4899')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-pink-500 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#FCD34D')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-yellow-300 hover:scale-110 transition-transform"></button>
+                                    <button onclick="changeColor('#6B7280')" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full border-2 border-gray-300 bg-gray-500 hover:scale-110 transition-transform"></button>
                                 </div>
                             </div>
 
                             <!-- Edit Controls -->
-                            <div class="pt-4 border-t border-gray-200">
-                                <label class="block text-sm font-medium mb-3">EDIT</label>
-                                <div class="space-y-2">
-                                    <button onclick="centerImage()" class="w-full py-3 border border-gray-300 rounded-full font-medium hover:bg-gray-50 transition-colors text-sm">
-                                        Center Image
+                            <div class="pt-3 border-t border-gray-200">
+                                <label class="block text-xs font-semibold mb-2 tracking-wide">EDIT</label>
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="centerImage()" class="py-2.5 border border-gray-300 rounded-full font-medium hover:bg-gray-50 transition-colors text-xs">
+                                        Center
                                     </button>
-                                    <button onclick="deleteSelected()" class="w-full py-3 border border-gray-300 rounded-full font-medium hover:bg-gray-50 transition-colors text-sm">
-                                        Delete Selected
+                                    <button onclick="deleteSelected()" class="py-2.5 border border-gray-300 rounded-full font-medium hover:bg-gray-50 transition-colors text-xs">
+                                        Delete
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Desktop Action Buttons -->
-                            <div class="hidden lg:block pt-4 space-y-3">
-                                <button onclick="downloadDesign()" class="w-full bg-black text-white py-4 rounded-full font-medium hover:bg-gray-800 transition-colors">
+                            <div class="hidden lg:block pt-3 space-y-2">
+                                <button onclick="downloadDesign()" class="w-full bg-black text-white py-3 rounded-full font-medium hover:bg-gray-800 transition-colors text-sm">
                                     Download Design
                                 </button>
-                                <button onclick="clearCanvas()" class="w-full border border-black py-4 rounded-full font-medium hover:bg-gray-50 transition-colors">
+                                <button onclick="clearCanvas()" class="w-full border-2 border-black py-3 rounded-full font-medium hover:bg-gray-50 transition-colors text-sm">
                                     Clear All
                                 </button>
                             </div>
@@ -143,12 +143,12 @@
                     </div>
 
                     <!-- Tips -->
-                    <div class="bg-gray-50 p-6 rounded-lg">
-                        <h3 class="font-medium mb-3">Tips</h3>
-                        <ul class="text-sm text-gray-600 space-y-2">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <h3 class="font-semibold mb-2 text-sm">Design Tips</h3>
+                        <ul class="text-xs text-gray-600 space-y-1.5">
                             <li>• Drag to move your photo</li>
                             <li>• Resize from corners</li>
-                            <li>• Rotate using top icon</li>
+                            <li>• Rotate using top handle</li>
                             <li>• Press Delete to remove</li>
                         </ul>
                     </div>
@@ -158,78 +158,73 @@
     </div>
 
     <!-- Features Section -->
-    <div class="bg-gray-50 py-16 mt-16">
+    <div class="bg-gray-50 py-12 lg:py-16 mt-8 lg:mt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
-                    <div class="text-3xl mb-4">🎨</div>
-                    <h3 class="font-bold mb-2">Unique Design</h3>
-                    <p class="text-sm text-gray-600">Create one-of-a-kind designs with your photos</p>
+                    <div class="text-3xl mb-3">🎨</div>
+                    <h3 class="font-bold mb-2 text-sm lg:text-base">Unique Design</h3>
+                    <p class="text-xs lg:text-sm text-gray-600">Create one-of-a-kind designs</p>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl mb-4">⚡</div>
-                    <h3 class="font-bold mb-2">Fast & Easy</h3>
-                    <p class="text-sm text-gray-600">Complete your design in minutes</p>
+                    <div class="text-3xl mb-3">⚡</div>
+                    <h3 class="font-bold mb-2 text-sm lg:text-base">Fast & Easy</h3>
+                    <p class="text-xs lg:text-sm text-gray-600">Design in minutes</p>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl mb-4">💯</div>
-                    <h3 class="font-bold mb-2">Premium Quality</h3>
-                    <p class="text-sm text-gray-600">High-quality materials and printing guaranteed</p>
+                    <div class="text-3xl mb-3">💯</div>
+                    <h3 class="font-bold mb-2 text-sm lg:text-base">Premium Quality</h3>
+                    <p class="text-xs lg:text-sm text-gray-600">High-quality guaranteed</p>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="border-t border-gray-200 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+    <footer class="border-t border-gray-200 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
                 <div>
-                    <h4 class="font-bold mb-4">Products</h4>
-                    <ul class="space-y-2 text-sm text-gray-600">
+                    <h4 class="font-bold mb-3 text-sm">Products</h4>
+                    <ul class="space-y-2 text-xs lg:text-sm text-gray-600">
                         <li><a href="#" class="hover:text-black">T-Shirts</a></li>
                         <li><a href="#" class="hover:text-black">Sweatshirts</a></li>
                         <li><a href="#" class="hover:text-black">Hoodies</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4">Support</h4>
-                    <ul class="space-y-2 text-sm text-gray-600">
+                    <h4 class="font-bold mb-3 text-sm">Support</h4>
+                    <ul class="space-y-2 text-xs lg:text-sm text-gray-600">
                         <li><a href="#" class="hover:text-black">Contact</a></li>
                         <li><a href="#" class="hover:text-black">FAQ</a></li>
                         <li><a href="#" class="hover:text-black">Shipping</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4">Company</h4>
-                    <ul class="space-y-2 text-sm text-gray-600">
+                    <h4 class="font-bold mb-3 text-sm">Company</h4>
+                    <ul class="space-y-2 text-xs lg:text-sm text-gray-600">
                         <li><a href="#" class="hover:text-black">About Us</a></li>
                         <li><a href="#" class="hover:text-black">Careers</a></li>
                         <li><a href="#" class="hover:text-black">Blog</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-bold mb-4">Follow Us</h4>
-                    <ul class="space-y-2 text-sm text-gray-600">
+                    <h4 class="font-bold mb-3 text-sm">Follow Us</h4>
+                    <ul class="space-y-2 text-xs lg:text-sm text-gray-600">
                         <li><a href="#" class="hover:text-black">Instagram</a></li>
                         <li><a href="#" class="hover:text-black">Twitter</a></li>
                         <li><a href="#" class="hover:text-black">Facebook</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="mt-8 pt-8 border-t border-gray-200 text-center text-sm text-gray-600">
+            <div class="mt-8 pt-6 border-t border-gray-200 text-center text-xs lg:text-sm text-gray-600">
                 <p>&copy; 2025 RAWECLUB. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        const canvas = new fabric.Canvas('canvas', {
-            width: 500,
-            height: 600,
-            backgroundColor: '#f9fafb'
-        });
-        
+        let canvas;
         let tshirtTemplate = null;
         let currentSide = 'front';
         let currentColor = '#FFFFFF';
@@ -237,30 +232,56 @@
         let backObjects = [];
         let isLoadingTemplate = false;
 
-        // Responsive canvas size
-        function resizeCanvas() {
-            const container = document.querySelector('.bg-gray-50.rounded-lg');
-            const containerWidth = container.offsetWidth - 48;
-            const scale = Math.min(containerWidth / 500, 1);
+        // Initialize canvas with proper sizing
+        function initCanvas() {
+            const container = document.getElementById('canvasContainer');
+            const containerWidth = container.offsetWidth;
             
-            if (window.innerWidth < 768) {
-                canvas.setDimensions({
-                    width: containerWidth,
-                    height: containerWidth * 1.2
-                });
-                canvas.setZoom(scale);
+            // Set canvas size based on screen
+            let canvasWidth, canvasHeight;
+            if (window.innerWidth < 1024) {
+                // Mobile: use full container width
+                canvasWidth = Math.min(containerWidth, 400);
+                canvasHeight = canvasWidth * 1.2;
             } else {
-                canvas.setDimensions({
-                    width: 500,
-                    height: 600
-                });
-                canvas.setZoom(1);
+                // Desktop: fixed size
+                canvasWidth = 500;
+                canvasHeight = 600;
             }
-            canvas.renderAll();
+            
+            canvas = new fabric.Canvas('canvas', {
+                width: canvasWidth,
+                height: canvasHeight,
+                backgroundColor: '#f9fafb'
+            });
+            
+            createTshirtTemplate();
         }
 
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
+        // Reinitialize on resize
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {
+                const container = document.getElementById('canvasContainer');
+                const containerWidth = container.offsetWidth;
+                
+                let canvasWidth, canvasHeight;
+                if (window.innerWidth < 1024) {
+                    canvasWidth = Math.min(containerWidth, 400);
+                    canvasHeight = canvasWidth * 1.2;
+                } else {
+                    canvasWidth = 500;
+                    canvasHeight = 600;
+                }
+                
+                canvas.setWidth(canvasWidth);
+                canvas.setHeight(canvasHeight);
+                
+                // Reload template with new size
+                createTshirtTemplate();
+            }, 250);
+        });
 
         // Load T-shirt template
         function createTshirtTemplate(side = 'front', callback) {
@@ -296,8 +317,6 @@
                 }
                 
                 tshirtTemplate = img;
-                
-                // Apply current color
                 applyColorToTemplate(currentColor);
                 
                 canvas.add(tshirtTemplate);
@@ -310,7 +329,7 @@
             }, { crossOrigin: 'anonymous' });
         }
 
-        // Apply color filter to template
+        // Apply color filter
         function applyColorToTemplate(color) {
             if (!tshirtTemplate) return;
             
@@ -327,11 +346,10 @@
             tshirtTemplate.applyFilters();
         }
 
-        // Side switch function
+        // Side switch
         function switchSide(side) {
             if (isLoadingTemplate || currentSide === side) return;
 
-            // Save current objects (serialize them properly)
             const currentObjects = canvas.getObjects().filter(obj => obj !== tshirtTemplate);
             const serializedObjects = currentObjects.map(obj => obj.toObject(['selectable', 'evented', 'cornerColor', 'cornerSize', 'transparentCorners', 'borderColor', 'cornerStyle']));
             
@@ -341,28 +359,16 @@
                 backObjects = serializedObjects;
             }
 
-            // Clear all objects except template
             canvas.getObjects().forEach(obj => {
                 if (obj !== tshirtTemplate) {
                     canvas.remove(obj);
                 }
             });
 
-            // Update current side
             currentSide = side;
 
-            // Load new template
             createTshirtTemplate(side, function() {
-                // Restore objects for this side
                 const objectsToLoad = side === 'front' ? frontObjects : backObjects;
-                
-                let loadedCount = 0;
-                const totalObjects = objectsToLoad.length;
-                
-                if (totalObjects === 0) {
-                    canvas.renderAll();
-                    return;
-                }
                 
                 objectsToLoad.forEach(objData => {
                     fabric.Image.fromObject(objData, function(img) {
@@ -374,29 +380,23 @@
                             cornerStyle: 'circle'
                         });
                         canvas.add(img);
-                        
-                        loadedCount++;
-                        if (loadedCount === totalObjects) {
-                            canvas.renderAll();
-                        }
                     });
                 });
+                
+                canvas.renderAll();
             });
 
-            // Update button styles
             const frontBtn = document.getElementById('frontBtn');
             const backBtn = document.getElementById('backBtn');
             
             if (side === 'front') {
-                frontBtn.className = 'py-3 border-2 border-black bg-black text-white rounded-full font-medium transition-all';
-                backBtn.className = 'py-3 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all';
+                frontBtn.className = 'py-2.5 border-2 border-black bg-black text-white rounded-full font-medium transition-all text-sm';
+                backBtn.className = 'py-2.5 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all text-sm';
             } else {
-                backBtn.className = 'py-3 border-2 border-black bg-black text-white rounded-full font-medium transition-all';
-                frontBtn.className = 'py-3 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all';
+                backBtn.className = 'py-2.5 border-2 border-black bg-black text-white rounded-full font-medium transition-all text-sm';
+                frontBtn.className = 'py-2.5 border-2 border-gray-300 bg-white text-black rounded-full font-medium hover:border-black transition-all text-sm';
             }
         }
-
-        createTshirtTemplate();
 
         // Photo upload
         document.getElementById('imageUpload').addEventListener('change', function(e) {
@@ -425,18 +425,15 @@
                 };
                 reader.readAsDataURL(file);
             }
-            // Reset input
             e.target.value = '';
         });
 
-        // Change color
         function changeColor(color) {
             currentColor = color;
             applyColorToTemplate(color);
             canvas.renderAll();
         }
 
-        // Center image
         function centerImage() {
             const activeObject = canvas.getActiveObject();
             if (activeObject && activeObject.type === 'image' && activeObject !== tshirtTemplate) {
@@ -452,7 +449,6 @@
             }
         }
 
-        // Delete selected object
         function deleteSelected() {
             const activeObject = canvas.getActiveObject();
             if (activeObject && activeObject !== tshirtTemplate) {
@@ -461,7 +457,6 @@
             }
         }
 
-        // Clear canvas
         function clearCanvas() {
             const objects = canvas.getObjects();
             objects.forEach(obj => {
@@ -470,7 +465,6 @@
                 }
             });
             
-            // Clear saved objects for current side
             if (currentSide === 'front') {
                 frontObjects = [];
             } else {
@@ -480,7 +474,6 @@
             canvas.renderAll();
         }
 
-        // Download design
         function downloadDesign() {
             canvas.discardActiveObject();
             canvas.renderAll();
@@ -497,7 +490,6 @@
             link.click();
         }
 
-        // Delete with keyboard
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Delete' || e.key === 'Backspace') {
                 const activeElement = document.activeElement;
@@ -507,6 +499,9 @@
                 }
             }
         });
+
+        // Initialize
+        initCanvas();
     </script>
 </body>
 </html>
