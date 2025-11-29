@@ -169,11 +169,11 @@ async function openSaveDialog() {
 // Open "My Designs" panel
 async function openMyDesignsPanel() {
   const html = `
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h3 style="margin:0 0 8px;font-weight:700">My Designs</h3>
-      <div style="display:flex;gap:8px">
-        <button id="rawe_new_design_btn" style="background:#000;color:#fff;padding:8px 16px;border:none;border-radius:4px;cursor:pointer">Save Current</button>
-        <button id="rawe_close_list_btn" style="background:#fff;border:1px solid #ccc;padding:8px 16px;border-radius:4px;cursor:pointer">Close</button>
+    <div class="flex items-center justify-between">
+      <h3 class="text-md font-bold">My Designs</h3>
+      <div class="flex gap-2">
+        <button id="rawe_new_design_btn" class="p-2 bg-black text-white font-bold text-xs md:text-base rounded-md">Save Current</button>
+        <button id="rawe_close_list_btn"  class="p-2 bg-black text-white font-bold text-xs md:text-base rounded-md">Close</button>
       </div>
     </div>
     <div id="rawe_designs_list" style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px"></div>
@@ -198,13 +198,13 @@ async function openMyDesignsPanel() {
       designs.forEach((d) => {
         const card = document.createElement("div");
         card.style =
-          "border:1px solid #eee;padding:8px;border-radius:6px;background:#fff;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:box-shadow 0.2s";
+          "border:1px solid #bbbbbbff;padding:8px;border-radius:6px;background:#fff;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:box-shadow 0.2s";
         card.onmouseenter = () => (card.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)");
         card.onmouseleave = () => (card.style.boxShadow = "none");
 
         const imgWrapper = document.createElement("div");
         imgWrapper.style =
-          "width:100%;height:120px;position:relative;background:#f5f5f5;border-radius:4px;overflow:hidden";
+          "width:100%;height:150px;position:relative;background:#f5f5f5;border-radius:4px;overflow:hidden";
 
         const img = document.createElement("img");
         img.style = "width:100%;height:100%;object-fit:cover;display:block";

@@ -27,7 +27,7 @@ function createAuthUI() {
    if (!ctl) {
       ctl = document.createElement("div");
       ctl.id = "raweclub_auth_ui";
-      ctl.className = "flex items-center space-x-4 ml-4";
+      ctl.className = "flex items-center space-x-4";
       rightSide.appendChild(ctl);
    }
 
