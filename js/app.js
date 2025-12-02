@@ -1,10 +1,12 @@
 let canvas;
 let tshirtTemplate = null;
-let currentSide = "front";
-let currentColor = "#FFFFFF";
-let frontObjects = [];
-let backObjects = [];
 let isLoadingTemplate = false;
+
+// USE WINDOW GLOBALS - This is critical for cabinet.js to work
+window.currentSide = "front";
+window.currentColor = "#FFFFFF";
+window.frontObjects = [];
+window.backObjects = [];
 
 // Initialize canvas with proper sizing
 function initCanvas() {
@@ -90,7 +92,7 @@ function createTshirtTemplate(side = "front", callback) {
          }
 
          tshirtTemplate = img;
-         applyColorToTemplate(currentColor);
+         applyColorToTemplate(window.currentColor);
 
          canvas.add(tshirtTemplate);
          canvas.sendToBack(tshirtTemplate);
@@ -125,28 +127,40 @@ function applyColorToTemplate(color) {
 
 // Side switch
 function switchSide(side) {
-   if (isLoadingTemplate || currentSide === side) return;
+   if (isLoadingTemplate || window.currentSide === side) return;
 
    const currentObjects = canvas.getObjects().filter((obj) => obj !== tshirtTemplate);
    const serializedObjects = currentObjects.map((obj) => obj.toObject(["selectable", "evented", "cornerColor", "cornerSize", "transparentCorners", "borderColor", "cornerStyle"]));
 
-   if (currentSide === "front") {
-      frontObjects = serializedObjects;
+   // Save current side's objects to global array
+   if (window.currentSide === "front") {
+      window.frontObjects = serializedObjects;
    } else {
-      backObjects = serializedObjects;
+      window.backObjects = serializedObjects;
    }
 
+   // Remove all objects except template
    canvas.getObjects().forEach((obj) => {
       if (obj !== tshirtTemplate) {
          canvas.remove(obj);
       }
    });
 
-   currentSide = side;
+   // Update current side
+   window.currentSide = side;
 
+   // Load template for new side
    createTshirtTemplate(side, function () {
-      const objectsToLoad = side === "front" ? frontObjects : backObjects;
+      const objectsToLoad = side === "front" ? window.frontObjects : window.backObjects;
 
+      console.log(`Switching to ${side} side. Loading ${objectsToLoad.length} objects`);
+
+      if (objectsToLoad.length === 0) {
+         canvas.renderAll();
+         return;
+      }
+
+      let loadedCount = 0;
       objectsToLoad.forEach((objData) => {
          fabric.Image.fromObject(objData, function (img) {
             img.set({
@@ -157,12 +171,17 @@ function switchSide(side) {
                cornerStyle: "circle",
             });
             canvas.add(img);
+            loadedCount++;
+
+            if (loadedCount === objectsToLoad.length) {
+               canvas.renderAll();
+               console.log(`Successfully loaded ${loadedCount} objects on ${side} side`);
+            }
          });
       });
-
-      canvas.renderAll();
    });
 
+   // Update button styles
    const frontBtn = document.getElementById("frontBtn");
    const backBtn = document.getElementById("backBtn");
 
@@ -206,7 +225,7 @@ document.getElementById("imageUpload").addEventListener("change", function (e) {
 });
 
 function changeColor(color) {
-   currentColor = color;
+   window.currentColor = color;
    applyColorToTemplate(color);
    canvas.renderAll();
 }
@@ -242,10 +261,11 @@ function clearCanvas() {
       }
    });
 
-   if (currentSide === "front") {
-      frontObjects = [];
+   // Clear the global arrays based on current side
+   if (window.currentSide === "front") {
+      window.frontObjects = [];
    } else {
-      backObjects = [];
+      window.backObjects = [];
    }
 
    canvas.renderAll();
@@ -256,10 +276,10 @@ async function downloadAndSave() {
    const currentObjects = canvas.getObjects().filter((obj) => obj !== tshirtTemplate);
    const serializedObjects = currentObjects.map((obj) => obj.toObject(["selectable", "evented", "cornerColor", "cornerSize", "transparentCorners", "borderColor", "cornerStyle"]));
 
-   if (currentSide === "front") {
-      frontObjects = serializedObjects;
+   if (window.currentSide === "front") {
+      window.frontObjects = serializedObjects;
    } else {
-      backObjects = serializedObjects;
+      window.backObjects = serializedObjects;
    }
 
    // Remove selection box
@@ -275,7 +295,7 @@ async function downloadAndSave() {
 
    // Download locally
    const link = document.createElement("a");
-   link.download = `raweclub-tshirt-${currentSide}.png`;
+   link.download = `raweclub-tshirt-${window.currentSide}.png`;
    link.href = currentSideDataURL;
    link.click();
 
@@ -294,12 +314,12 @@ async function downloadAndSave() {
       const body = {
          title: prompt("Enter design title:", "My Design") || "My Design",
          description: "",
-         tshirtColor: currentColor,
+         tshirtColor: window.currentColor,
          frontImageBase64: frontPreview,
          backImageBase64: backPreview,
          // Save the actual fabric.js objects for proper loading
-         frontObjects: frontObjects,
-         backObjects: backObjects,
+         frontObjects: window.frontObjects,
+         backObjects: window.backObjects,
       };
 
       const res = await fetch("http://localhost:5000/api/designs", {
@@ -324,7 +344,7 @@ async function downloadAndSave() {
    }
 }
 
-// Helper function to render a side preview (add this to app.js)
+// Helper function to render a side preview
 async function renderSidePreview(side) {
    return new Promise((resolve, reject) => {
       // Create offscreen canvas
@@ -360,10 +380,10 @@ async function renderSidePreview(side) {
             });
 
             // Apply color filter
-            if (currentColor !== "#FFFFFF") {
+            if (window.currentColor !== "#FFFFFF") {
                tplImg.filters.push(
                   new fabric.Image.filters.BlendColor({
-                     color: currentColor,
+                     color: window.currentColor,
                      mode: "tint",
                      alpha: 0.83,
                   })
@@ -375,7 +395,7 @@ async function renderSidePreview(side) {
             tempCanvas.sendToBack(tplImg);
 
             // Load objects for this side
-            const objectsToLoad = side === "front" ? frontObjects : backObjects;
+            const objectsToLoad = side === "front" ? window.frontObjects : window.backObjects;
 
             if (objectsToLoad.length === 0) {
                tempCanvas.renderAll();
@@ -418,6 +438,13 @@ document.addEventListener("keydown", function (e) {
       }
    }
 });
+
+// Expose functions to window for cabinet.js
+window.canvas = canvas;
+window.tshirtTemplate = tshirtTemplate;
+window.switchSide = switchSide;
+window.changeColor = changeColor;
+window.clearCanvas = clearCanvas;
 
 // Initialize
 initCanvas();
