@@ -153,7 +153,7 @@ function switchSide(side) {
    createTshirtTemplate(side, function () {
       const objectsToLoad = side === "front" ? window.frontObjects : window.backObjects;
 
-      console.log(`Switching to ${side} side. Loading ${objectsToLoad.length} objects`);
+      // console.log(`Switching to ${side} side. Loading ${objectsToLoad.length} objects`);
 
       if (objectsToLoad.length === 0) {
          canvas.renderAll();
@@ -175,7 +175,7 @@ function switchSide(side) {
 
             if (loadedCount === objectsToLoad.length) {
                canvas.renderAll();
-               console.log(`Successfully loaded ${loadedCount} objects on ${side} side`);
+               // console.log(`Successfully loaded ${loadedCount} objects on ${side} side`);
             }
          });
       });
@@ -313,7 +313,7 @@ async function downloadAndSave() {
 
       const body = {
          title: prompt("Enter design title:", "My Design") || "My Design",
-         description: "",
+         description: prompt("Enter description:", "My Description") || "My Description",
          tshirtColor: window.currentColor,
          frontImageBase64: frontPreview,
          backImageBase64: backPreview,
@@ -322,7 +322,7 @@ async function downloadAndSave() {
          backObjects: window.backObjects,
       };
 
-      const res = await fetch("http://localhost:5000/api/designs", {
+      const res = await fetch("https://rawnclub-back.onrender.com/api/designs", {
          method: "POST",
          headers: {
             "Content-Type": "application/json",

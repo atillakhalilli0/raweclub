@@ -2,7 +2,7 @@
 import { adminApi } from "./adminApi.js";
 
 // IMPORTANT: Backend URL where images are served
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://rawnclub-back.onrender.com";
 
 /* ------------------------------------------
    Helper: Build modal

@@ -1,5 +1,5 @@
 // js/adminApi.js
-const API_BASE = "http://localhost:5000/api";
+const API_BASE = "https://rawnclub-back.onrender.com/api";
 
 function getAuthHeaders() {
   const token = localStorage.getItem("raweclub_token");

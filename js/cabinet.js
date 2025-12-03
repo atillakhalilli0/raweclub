@@ -2,7 +2,7 @@
 import { designApi } from "./api.js";
 
 // IMPORTANT: Backend URL where images are served
-const BACKEND_URL = "http://localhost:5000";
+const BACKEND_URL = "https://rawnclub-back.onrender.com";
 
 function buildModal(html) {
    const existing = document.getElementById("raweclub_modal");
@@ -205,7 +205,7 @@ async function openMyDesignsPanel() {
    try {
       const res = await designApi.getMyDesigns();
       const designs = res.designs || [];
-      console.log("Designs from API:", designs);
+      // console.log("Designs from API:", designs);
 
       if (designs.length === 0) {
          listDiv.innerHTML = "<div style='color:#666;padding:20px;text-align:center'>No designs yet. Create your first design!</div>";
@@ -242,7 +242,7 @@ async function openMyDesignsPanel() {
                };
 
                img.onload = function () {
-                  console.log("Image loaded successfully:", imageUrl);
+                  // console.log("Image loaded successfully:", imageUrl);
                };
             } else {
                const placeholder = document.createElement("div");
@@ -309,17 +309,17 @@ async function loadDesignToCanvas(id) {
       const d = res.design;
       if (!d) return alert("Design not found");
 
-      console.log("=== LOADING DESIGN ===");
-      console.log("Design data:", d);
-      console.log("Front objects:", d.frontObjects?.length || 0);
-      console.log("Back objects:", d.backObjects?.length || 0);
+      // console.log("=== LOADING DESIGN ===");
+      // console.log("Design data:", d);
+      // console.log("Front objects:", d.frontObjects?.length || 0);
+      // console.log("Back objects:", d.backObjects?.length || 0);
 
       // CRITICAL: Set global window arrays FIRST before any other operations
       window.frontObjects = Array.isArray(d.frontObjects) ? d.frontObjects : [];
       window.backObjects = Array.isArray(d.backObjects) ? d.backObjects : [];
 
-      console.log("Set window.frontObjects:", window.frontObjects.length);
-      console.log("Set window.backObjects:", window.backObjects.length);
+      // console.log("Set window.frontObjects:", window.frontObjects.length);
+      // console.log("Set window.backObjects:", window.backObjects.length);
 
       // Clear current canvas
       if (window.clearCanvas) {
@@ -344,8 +344,8 @@ async function loadDesignToCanvas(id) {
       window.frontObjects = Array.isArray(d.frontObjects) ? d.frontObjects : [];
       window.backObjects = Array.isArray(d.backObjects) ? d.backObjects : [];
 
-      console.log("Restored window.frontObjects:", window.frontObjects.length);
-      console.log("Restored window.backObjects:", window.backObjects.length);
+      // console.log("Restored window.frontObjects:", window.frontObjects.length);
+      // console.log("Restored window.backObjects:", window.backObjects.length);
 
       // Apply T-shirt color
       if (d.tshirtColor && window.changeColor) {
